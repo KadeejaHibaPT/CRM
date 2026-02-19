@@ -1,73 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Registration Data Table</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- DataTables CSS -->
-  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-</head>
-<body>
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>View Products</title>#}
+{#  <!-- Bootstrap CSS -->#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <!-- DataTables CSS -->#}
+{#  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">#}
+{#</head>#}
+{#<body>#}
+{% extends 'Seller/home_index.html' %}
+{% block body %}
   <div class="container mt-5">
-    <h2 class="mb-4">Registered Users</h2>
+    <h2 class="mb-4">View Products</h2>
     <table id="registrationTable" class="table table-striped table-bordered">
       <thead>
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Gender</th>
-          <th>DOB</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Place</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Pincode</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Photo</th>
           <th>Photo</th>
         </tr>
       </thead>
       <tbody>
         <!-- Sample Data Row -->
+        {% for i in data %}
         <tr>
-          <td>1</td>
-          <td>Aarav Kumar</td>
-          <td>Male</td>
-          <td>1995-06-15</td>
-          <td>aarav@example.com</td>
-          <td>9876543210</td>
-          <td>MG Road</td>
-          <td>Bangalore</td>
-          <td>Karnataka</td>
-          <td>560001</td>
-          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.description }}</td>
+          <td>{{ i.price }}</td>
+          <td><img src="{{ i.photo }}" class="img-thumbnail" width="50" /></td>
+          <td>
+              <a href="/myapp/editproducts_get/{{ i.id }}" class="btn btn-primary btn-sm">Edit</a>
+              <a href="/myapp/deleteproducts_get/{{ i.id }}" class="btn btn-primary btn-sm">Delete</a>
+
+</td>
+
         </tr>
-        <tr>
-          <td>2</td>
-          <td>Priya Singh</td>
-          <td>Female</td>
-          <td>1998-12-05</td>
-          <td>priya@example.com</td>
-          <td>9123456789</td>
-          <td>Anna Nagar</td>
-          <td>Chennai</td>
-          <td>Tamil Nadu</td>
-          <td>600040</td>
-          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>
-        </tr>
+        {% endfor %}
+
         <!-- Add more rows dynamically from backend -->
       </tbody>
     </table>
   </div>
+{% endblock %}
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#registrationTable').DataTable();
-    });
-  </script>
-</body>
-</html>
+{#  <!-- Scripts -->#}
+{#  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>#}
+{#  <script>#}
+{#    $(document).ready(function () {#}
+{#      $('#registrationTable').DataTable();#}
+{#    });#}
+{#  </script>#}
+{#</body>#}
+{#</html>#}

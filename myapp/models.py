@@ -79,3 +79,8 @@ class Complaint(models.Model):
     status = models.CharField(max_length=200)
     USERS = models.ForeignKey(Users, on_delete=models.CASCADE)
 
+
+class Loyalty(models.Model):
+    points = models.IntegerField()
+    USERS = models.ForeignKey(Users, on_delete=models.CASCADE)
+

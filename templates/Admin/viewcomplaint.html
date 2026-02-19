@@ -21,6 +21,7 @@
           <th>Complaint</th>
           <th>Reply</th>
           <th>Status</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -33,10 +34,14 @@
           <td>
 
               {% if status == "pending" %}
-              <a href="/myapp/sendreply_get/{{ i.id }}"></a></td>
-            {% elif %}
+              <a href="/myapp/sendreply_get/{{ i.id }}">reply</a>
+
+             {% else %}
+
             {{ i.reply }}
-            {% endif %}
+
+              {% endif %}
+
           <td>{{ i.status }}</td>
 
         </tr>

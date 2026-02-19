@@ -27,6 +27,7 @@
           <th>Status</th>
           <th>Pincode</th>
           <th>License</th>
+            <th></th>
         </tr>
       </thead>
       <tbody>
@@ -36,7 +37,7 @@
         <tr>
           <td>{{forloop.counter}}</td>
           <td>{{ i.name }}</td>
-          <td><img src="{{ i.logo }}"></td>
+          <td><img src="{{ i.logo }}" height="100px" width="100px"></td>
           <td>{{ i.since }}</td>
           <td>{{ i.email }}</td>
           <td>{{ i.phone }}</td>
@@ -45,6 +46,9 @@
           <td>{{ i.status }}</td>
           <td>{{ i.pin }}</td>
           <td>{{ i.license }}</td>
+          <td><a href="/myapp/approveseller_get/{{ i.id }}" class="btn btn-info">Approve</a><br>
+          <a href="/myapp/rejectseller_get/{{ i.id }}" class="btn btn-danger">Reject</a></td>
+
 
         </tr>
         {% endfor %}
