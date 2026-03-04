@@ -1,0 +1,51 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>Edit Coupon</title>#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{##}
+{#</head>#}
+{#<body>#}
+{% extends 'Seller/home_index.html' %}
+{% block body %}
+  <div class="container">
+    <h2 class="mb-4">Edit Coupon</h2>
+    <form method="post" action="/myapp/editcoupon_post/" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ data.id }}">
+      <div class="row mb-3">
+        <label for="amount" class="col-sm-4 ">Amount</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="amount" id="amount" required value="{{ data.amount }}">
+        </div>
+      </div>
+
+<div class="row mb-3">
+        <label for="couponcode" class="col-sm-4 ">Coupon Code</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="{{ data.couponcode }}" name="couponcode" id="couponcode" required>
+        </div>
+      </div>
+
+
+
+      <div class="row mb-3">
+        <label for="validupto" class="col-sm-4 ">Valid Upto</label>
+        <div class="col-sm-8">
+          <input type="date"  class="form-control" value="{{ data.validateupto | date:'Y-m-d' }}" name="validupto" id="validupto" required>
+        </div>
+      </div>
+
+
+      <div class="row mb-3">
+        <div class="offset-sm-4 col-sm-8">
+          <button type="submit" class="btn btn-primary">Edit Coupon</button>
+       </div>
+      </div>
+   </form>
+  </div>
+{% endblock %}
+{#  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
