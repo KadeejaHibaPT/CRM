@@ -25,8 +25,8 @@
       <div class="row mb-3">
         <label for="photo" class="col-sm-4 ">Photo</label>
         <div class="col-sm-8">
-          <input type="file" class="form-control"  name="photo" id="photo" accept="image/*" required>
-            <img src="{{ data.logo }}" height="100" width="100">
+          <input type="file" class="form-control"  name="photo" id="photo" accept="image/*" >
+            <img src="{{ data.photo }}" height="100" width="100">
         </div>
       </div>
 
@@ -45,6 +45,23 @@
         </div>
       </div>
 
+        <div class="row mb-3">
+        <label for="city" class="col-sm-4 ">Category</label>
+        <div class="col-sm-8">
+            <select name="category" class="form-select">
+                <option value="UI/UX Design" {% if data.category == 'UI/UX Design' %} selected {% endif %}>UI/UX Design</option>
+                <option value="Website Maintenance & Support"{% if data.category == 'Website Maintenance & Support' %} selected {% endif %}>Website Maintenance & Support</option>
+                <option value="SEO Services" {% if data.category == 'SEO Services' %} selected {% endif %}>SEO Services</option>
+                <option value="Digital Marketing" {% if data.category == 'Digital Marketing' %} selected {% endif %}>Digital Marketing</option>
+                <option value="Content Writing & Copywriting" {% if data.category == 'Content Writing & Copywriting' %} selected {% endif %}>Content Writing & Copywriting</option>
+                <option value="Brand Identity Design" {% if data.category == 'Brand Identity Design' %} selected {% endif %}>Brand Identity Design</option>
+                <option value="E-commerce Setup" {% if data.category == 'E-commerce Setupn' %} selected {% endif %}>E-commerce Setup</option>
+                <option value="Landing Page Design" {% if data.category == 'Landing Page Design' %} selected {% endif %}>Landing Page Design</option>
+                <option value="Social Media Management" {% if data.category == 'Social Media Management' %} selected {% endif %}>Social Media Management</option>
+                <option value="Website Optimization" {% if data.category == 'Website Optimization' %} selected {% endif %}>Website Optimization</option>
+            </select>
+        </div>
+      </div>
 {#      <div class="row mb-3">#}
 {#        <label for="city" class="col-sm-4 ">District</label>#}
 {#        <div class="col-sm-8">#}

@@ -11,6 +11,7 @@ from  django.contrib.auth.models import User, Group
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
+from sympy.integrals.meijerint_doc import category
 
 from myapp.models import *
 
@@ -228,6 +229,7 @@ def addproducts_get(request):
 
 def addproducts_post(request):
     name = request.POST['name']
+    category = request.POST['category']
     photo = request.FILES['photo']
     from datetime import datetime
     date = datetime.now().strftime("%Y%m%d-%H%M%S")+".jpg"
@@ -241,6 +243,7 @@ def addproducts_post(request):
 
     p = Product()
     p.name = name
+    p.category = category
     p.photo = path
     p.description = description
     p.price = price
@@ -249,7 +252,7 @@ def addproducts_post(request):
     return redirect('/myapp/addproducts_get/')
 
 def viewallproducts_get(request):
-    a = Product.objects.all()
+    a = Product.objects.filter(SELLER__USER_id=request.user.id)
     return render(request, 'Seller/viewallproducts.html',{'data':a})
 
 
@@ -261,6 +264,7 @@ def editproducts_get(request,id):
 def editproducts_post(request):
     name = request.POST['name']
     description = request.POST['description']
+    category = request.POST['category']
     price = request.POST['price']
     id = request.POST['id']
 
@@ -280,8 +284,9 @@ def editproducts_post(request):
     p.name = name
     p.description = description
     p.price = price
+    p.category = category
     p.save()
-    return redirect('/myapp/viewallproducts_get/')
+    return redirect('/myapp/viewallproducts_get/#a')
 
 def deleteproducts_get(request,id):
     Product.objects.get(id=id).delete()
@@ -487,7 +492,8 @@ def user_viewproduct_post(request):
             'photo' : i.photo,
             'description' : i.description,
             'price' : i.price,
-            'sid': i.SELLER.id
+            'sid': i.SELLER.id,
+            'category': i.category
 
         })
 
@@ -768,6 +774,7 @@ def user_receiveoffers(request):
         validateupto__gte=datetime.now().date()
     )
 
+
     if not coupons.exists():
         print(3)
         return JsonResponse({
@@ -901,8 +908,10 @@ def user_updatecartquantity_post(request):
 def viewprofilehomepage(request):
     lid = request.POST['lid']
     data = Users.objects.get(USER=lid)
+    data1 = Loyalty.objects.get(USERS__USER_id=lid)
+    print(data1.points,"ffffffffffff")
     return JsonResponse({'status': 'ok', 'id': data.id, 'name': data.name,
-                          'photo': data.photo})
+                          'photo': data.photo,'points': data1.points})
 
 def user_sendreview(request):
     rating = request.POST['rating']
@@ -949,3 +958,47 @@ def user_viewordersub(request):
 
         })
     return JsonResponse({'status': 'ok', 'data': l})
+
+
+
+def chatbot(request):
+
+    chat=request.POST["chat"]
+
+    print("chat ",chat)
+
+    from transformers import pipeline
+
+    # Load Question Answering pipeline
+    qa_model = pipeline(
+        "question-answering",
+        model="distilbert-base-cased-distilled-squad"
+    )
+
+    # Context (knowledge base)
+    context = """
+    You are a smart, friendly sales assistant for crm.
+    Your goal is to help customers discover premium products and guide them toward the current special offer on purchases over 3000.
+    Ask a few quick questions to understand what they’re shopping for and their priorities (quality, warranty, delivery speed, budget range).
+    Highlight premium benefits (quality, durability, warranty, after-sales support).
+    Clearly mention the exclusive offer for orders over 3000 when relevant (discount, free gift, extended warranty, free shipping, or installment plan).
+    Reduce hesitation by emphasizing value, trust, and risk-free perks.
+    Gently guide users toward checkout or speaking with a human advisor for big purchases.
+    """
+
+    # User query
+    question = chat
+
+    # Get answer
+    result = qa_model(question=question, context=context)
+
+    print("Question:", question)
+    print("Answer:", result["answer"])
+    print("Confidence Score:", result["score"])
+
+    return  JsonResponse(
+        {
+            'status':'ok',
+            'data':result['answer']
+        }
+    )

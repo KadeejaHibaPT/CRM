@@ -33,7 +33,7 @@
           <td>{{ i.complaint }}</td>
           <td>
 
-              {% if status == "pending" %}
+              {% if i.status == "pending" %}
               <a href="/myapp/sendreply_get/{{ i.id }}">reply</a>
 
              {% else %}

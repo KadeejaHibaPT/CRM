@@ -91,6 +91,7 @@ urlpatterns = [
     path('user_sendreview/',views.user_sendreview),
     path('user_viewordermain/',views.user_viewordermain),
     path('user_viewordersub/',views.user_viewordersub),
+    path('chatbot/',views.chatbot),
 
 
 

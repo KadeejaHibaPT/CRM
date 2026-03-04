@@ -32,6 +32,7 @@ class Seller(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     photo = models.CharField(max_length=200)
+    category = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     price = models.CharField(max_length=200)
     SELLER = models.ForeignKey(Seller, on_delete=models.CASCADE)
